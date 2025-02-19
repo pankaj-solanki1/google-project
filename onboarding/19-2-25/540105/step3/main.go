@@ -1,44 +1,37 @@
 package main
 
-// FindPrimes extracts prime numbers from the array and applies specific rules.
-func FindPrimes(arr []int) []int {
-	if len(arr)%2 != 0 {
-		return []int{}
-	}
+import "fmt"
 
-	primes := []int{}
-	seen := make(map[int]bool)
-	sum := 0
-	for _, num := range arr {
-		if num > 1 && isPrime(num) {
-			if !seen[num] { // Ensure unique primes
-				primes = append(primes, num)
-				seen[num] = true
-			}
-		}
-	}
-
-	for _, num := range primes {
-		sum += num
-	}
-
-	// If the sum of prime numbers is even, return an empty array
-	if sum%2 == 0 {
-		return []int{}
-	}
-
-	return primes
-}
-
-// isPrime checks if a number is prime.
-func isPrime(num int) bool {
-	if num <= 1 {
+// HasDuplicates checks if an array contains duplicate elements.
+func HasDuplicates(arr []int) bool {
+	if len(arr) <= 1 {
 		return false
 	}
-	for i := 2; i*i <= num; i++ {
-		if num%i == 0 {
-			return false
+
+	seen := make(map[int]bool)
+	for _, num := range arr {
+		if seen[num] {
+			return true
 		}
+		seen[num] = true
 	}
-	return true
+
+	return false
+}
+
+func main() {
+	arr := []int{1, 2, 3, 4, 5, 2}
+	fmt.Println(HasDuplicates(arr)) // Expected Output: true
+
+	arr = []int{1, 3, 5, 7, 9}
+	fmt.Println(HasDuplicates(arr)) // Expected Output: false
+
+	arr = []int{10, 20, 30, 40, 50}
+	fmt.Println(HasDuplicates(arr)) // Expected Output: false
+
+	arr = []int{5, 5, 5, 5, 5}
+	fmt.Println(HasDuplicates(arr)) // Expected Output: true
+
+	arr = []int{5}
+	fmt.Println(HasDuplicates(arr)) // Expected Output: false
 }

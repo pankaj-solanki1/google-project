@@ -4,25 +4,26 @@ import "fmt"
 
 // FindPrimes extracts prime numbers from the array following the specified rules.
 func FindPrimes(arr []int) []int {
-	sum := 0
+	if len(arr)%2 != 0 {
+		return []int{}
+	}
+
 	primes := []int{}
-	seen := map[int]bool{}
+	seen := make(map[int]bool)
+	sum := 0
 
 	for _, num := range arr {
-		if num <= 0 {
-			continue // Ignore negative numbers and zero
-		}
-		sum += num
-		if isPrime(num) {
+		if num > 1 && isPrime(num) {
 			if !seen[num] {
 				primes = append(primes, num)
 				seen[num] = true
+				sum += num
 			}
 		}
 	}
 
 	if sum%2 == 0 {
-		return []int{} // Return empty list if sum is even
+		return []int{}
 	}
 
 	return primes

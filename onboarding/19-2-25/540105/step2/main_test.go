@@ -17,62 +17,62 @@ func TestFindPrimes(t *testing.T) {
 			expected: []int{},
 		},
 		{
-			name:     "All even numbers, sum is even",
-			input:    []int{2, 4, 6, 8},
+			name:     "Odd length array",
+			input:    []int{2, 3, 5},
 			expected: []int{},
 		},
 		{
-			name:     "All odd numbers, sum is even",
+			name:     "No prime numbers",
+			input:    []int{4, 6, 8, 10},
+			expected: []int{},
+		},
+		{
+			name:     "Prime numbers with odd sum",
+			input:    []int{5, 7, 13, 2},
+			expected: []int{5, 7, 13, 2},
+		},
+		{
+			name:     "Prime numbers with even sum",
+			input:    []int{2, 3, 5, 7},
+			expected: []int{},
+		},
+		{
+			name:     "Duplicate prime numbers",
+			input:    []int{2, 2, 3, 5, 5, 7},
+			expected: []int{},
+		},
+		{
+			name:     "Mixed prime and non-prime numbers",
+			input:    []int{2, 3, 4, 5, 6, 7, 8, 9, 11, 12},
+			expected: []int{},
+		},
+		{
+			name:     "Negative numbers and zero",
+			input:    []int{-2, -1, 0, 1, 2, 3},
+			expected: []int{},
+		},
+		{
+			name:     "Large prime numbers",
+			input:    []int{101, 103, 107, 109},
+			expected: []int{},
+		},
+		{
+			name:     "Example 1",
+			input:    []int{2, 3, 4, 5, 6, 7, 8, 9, 11, 10},
+			expected: []int{},
+		},
+		{
+			name:     "Example 2",
 			input:    []int{17, 19, 23, 29},
 			expected: []int{},
 		},
 		{
-			name:     "Mixed prime and non-prime, sum is even",
-			input:    []int{2, 3, 4, 5, 6, 7, 8, 9, 11},
-			expected: []int{},
+			name:     "Example 3",
+			input:    []int{5, 7, 13, 2},
+			expected: []int{5, 7, 13, 2},
 		},
 		{
-			name:     "Mixed prime and non-prime, sum is odd",
-			input:    []int{5, 7, 13},
-			expected: []int{5, 7, 13},
-		},
-		{
-			name:     "Duplicate primes, sum is odd",
-			input:    []int{2, 2, 3, 5, 5, 7},
-			expected: []int{2, 3, 5, 7},
-		},
-		{
-			name:     "Negative numbers and zero, sum is odd",
-			input:    []int{-2, 0, 3, 5, -7, 11},
-			expected: []int{3, 5, 11},
-		},
-		{
-			name:     "Only negative numbers and zero",
-			input:    []int{-2, 0, -5},
-			expected: []int{},
-		},
-		{
-			name:     "Single prime number, sum is odd",
-			input:    []int{53},
-			expected: []int{53},
-		},
-		{
-			name:     "Single non-prime number",
-			input:    []int{4},
-			expected: []int{},
-		},
-		{
-			name:     "Large numbers",
-			input:    []int{997, 1009, 1013},
-			expected: []int{}, // Sum is 3019 (odd).  997, 1009 and 1013 are primes.  But the sum is 3019, which is odd, so should return it.  Ah, the original implementation had a bug where the sum was not being calculated correctly.  The sum is actually odd.
-		},
-		{
-			name:     "Another mixed test case with duplicate primes, negative numbers and even sum",
-			input:    []int{-2, 2, 3, 5, 2, 7, -1, 0, 4},
-			expected: []int{},
-		},
-		{
-			name:     "Mixed primes and non-primes, odd sum",
+			name:     "Example 4",
 			input:    []int{50, 51, 52, 53},
 			expected: []int{53},
 		},

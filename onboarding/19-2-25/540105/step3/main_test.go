@@ -1,73 +1,85 @@
 package main
 
-import (
-	"reflect"
-	"testing"
-)
+import "testing"
 
-func TestFindPrimes(t *testing.T) {
+func TestHasDuplicates(t *testing.T) {
 	testCases := []struct {
 		name     string
 		input    []int
-		expected []int
+		expected bool
 	}{
+		{
+			name:     "Has duplicates",
+			input:    []int{1, 2, 3, 4, 5, 2},
+			expected: true,
+		},
+		{
+			name:     "No duplicates",
+			input:    []int{1, 3, 5, 7, 9},
+			expected: false,
+		},
+		{
+			name:     "Even sum, no duplicates",
+			input:    []int{10, 20, 30, 40, 50},
+			expected: false,
+		},
+		{
+			name:     "All elements identical",
+			input:    []int{5, 5, 5, 5, 5},
+			expected: true,
+		},
+		{
+			name:     "Single element",
+			input:    []int{5},
+			expected: false,
+		},
 		{
 			name:     "Empty array",
 			input:    []int{},
-			expected: []int{},
+			expected: false,
 		},
 		{
-			name:     "Odd length array",
-			input:    []int{2, 3, 5},
-			expected: []int{},
+			name:     "Negative numbers and duplicates",
+			input:    []int{-1, -2, -3, -1},
+			expected: true,
 		},
 		{
-			name:     "No prime numbers",
-			input:    []int{4, 6, 8, 10},
-			expected: []int{},
+			name:     "Negative numbers, even sum, no duplicates",
+			input:    []int{-2, -4, -6, -8},
+			expected: false,
 		},
 		{
-			name:     "Prime numbers with odd sum",
-			input:    []int{5, 7, 13, 2},
-			expected: []int{5, 7, 13, 2},
+			name:     "Mixed positive and negative, duplicates",
+			input:    []int{1, -1, 2, -2, 1},
+			expected: true,
 		},
 		{
-			name:     "Mixed prime and non-prime numbers",
-			input:    []int{2, 3, 4, 5, 6, 7, 8, 9, 11, 12},
-			expected: []int{},
+			name:     "Large numbers, duplicates",
+			input:    []int{1000000, 2000000, 1000000},
+			expected: true,
 		},
 		{
-			name:     "Large prime numbers",
-			input:    []int{101, 103, 107, 109},
-			expected: []int{},
+			name:     "Large numbers, even sum, no duplicates",
+			input:    []int{1000000, 2000000, 3000000},
+			expected: false,
 		},
 		{
-			name:     "Example 1",
-			input:    []int{2, 3, 4, 5, 6, 7, 8, 9, 11, 10},
-			expected: []int{},
+			name:     "Zero values, duplicates",
+			input:    []int{0, 0, 0},
+			expected: true,
 		},
 		{
-			name:     "Example 2",
-			input:    []int{17, 19, 23, 29},
-			expected: []int{},
-		},
-		{
-			name:     "Example 3",
-			input:    []int{5, 7, 13, 2},
-			expected: []int{5, 7, 13, 2},
-		},
-		{
-			name:     "Example 4",
-			input:    []int{50, 51, 52, 53},
-			expected: []int{53},
+			name:     "Zero values, even sum",
+			input:    []int{0, 2, 4},
+			expected: false,
 		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			result := FindPrimes(tc.input)
-			if !reflect.DeepEqual(result, tc.expected) {
-				t.Errorf("FindPrimes(%v) = %v, expected %v", tc.input, result, tc.expected)
+			actual := HasDuplicates(tc.input)
+			if actual != tc.expected {
+				t.Errorf("For input %v, expected %v, but got %v", tc.input, tc.expected, actual)
 			}
 		})
 	}
