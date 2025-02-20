@@ -41,8 +41,9 @@ func TestHasDuplicates(t *testing.T) {
 		{
 			name:     "mixed duplicates and even sum",
 			arr:      []int{2, 2, 3, 3},
-			expected: false,
+			expected: true,
 		},
+
 		{
 			name:     "large numbers, duplicates",
 			arr:      []int{1000000, 2000000, 1000000},
