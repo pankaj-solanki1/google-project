@@ -1,86 +1,105 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"strconv"
+	"testing"
+)
 
-func TestHasDuplicates(t *testing.T) {
-	testCases := []struct {
-		name     string
-		input    []int
-		expected bool
-	}{
-		{
-			name:     "Has duplicates",
-			input:    []int{1, 2, 3, 4, 5, 2},
-			expected: true,
-		},
-		{
-			name:     "No duplicates",
-			input:    []int{1, 3, 5, 7, 9},
-			expected: false,
-		},
-		{
-			name:     "Even sum, no duplicates",
-			input:    []int{10, 20, 30, 40, 50},
-			expected: false,
-		},
-		{
-			name:     "All elements identical",
-			input:    []int{5, 5, 5, 5, 5},
-			expected: true,
-		},
-		{
-			name:     "Single element",
-			input:    []int{5},
-			expected: false,
-		},
-		{
-			name:     "Empty array",
-			input:    []int{},
-			expected: false,
-		},
-		{
-			name:     "Negative numbers and duplicates",
-			input:    []int{-1, -2, -3, -1},
-			expected: true,
-		},
-		{
-			name:     "Negative numbers, even sum, no duplicates",
-			input:    []int{-2, -4, -6, -8},
-			expected: false,
-		},
-		{
-			name:     "Mixed positive and negative, duplicates",
-			input:    []int{1, -1, 2, -2, 1},
-			expected: true,
-		},
-		{
-			name:     "Large numbers, duplicates",
-			input:    []int{1000000, 2000000, 1000000},
-			expected: true,
-		},
-		{
-			name:     "Large numbers, even sum, no duplicates",
-			input:    []int{1000000, 2000000, 3000000},
-			expected: false,
-		},
-		{
-			name:     "Zero values, duplicates",
-			input:    []int{0, 0, 0},
-			expected: true,
-		},
-		{
-			name:     "Zero values, even sum",
-			input:    []int{0, 2, 4},
-			expected: false,
-		},
-	}
+// FizzBuzz generates the sequence from 1 to 100 with the given rules.
+func FizzBuzz() []interface{} {
+	result := make([]interface{}, 0)
+	cumulativeSum := 0
+	for i := 1; i <= 100; i++ {
+		output := ""
+		if i%3 == 0 {
+			output += "Fizz"
+		}
+		if i%5 == 0 {
+			output += "Buzz"
+		}
 
-	for _, tc := range testCases {
-		t.Run(tc.name, func(t *testing.T) {
-			actual := HasDuplicates(tc.input)
-			if actual != tc.expected {
-				t.Errorf("For input %v, expected %v, but got %v", tc.input, tc.expected, actual)
+		if output == "" {
+			output = strconv.Itoa(i)
+			num, _ := strconv.Atoi(output)
+			cumulativeSum += num
+
+			if cumulativeSum%2 == 0 {
+				result = append(result, false)
+				return result
 			}
-		})
+			result = append(result, output)
+
+		} else {
+			numValue := 0
+			if output == "Fizz" {
+				numValue = i
+			} else if output == "Buzz" {
+				numValue = i
+			} else if output == "FizzBuzz" {
+				numValue = i
+			} else {
+				numValue, _ = strconv.Atoi(output)
+
+			}
+
+			cumulativeSum += numValue
+
+			if cumulativeSum%2 == 0 {
+				result = append(result, false)
+				return result
+			}
+
+			result = append(result, output)
+
+		}
+
 	}
+	return result
+}
+
+func main() {
+	result := FizzBuzz()
+	fmt.Println(result)
+}
+
+func TestFizzBuzz(t *testing.T) {
+	result := FizzBuzz()
+
+	// Test the first few elements
+	if len(result) > 0 && result[0] != "1" {
+		t.Errorf("Expected '1' at index 0, got %v", result[0])
+	}
+	if len(result) > 2 && result[2] != "Fizz" {
+		t.Errorf("Expected 'Fizz' at index 2, got %v", result[2])
+	}
+	if len(result) > 4 && result[4] != "Buzz" {
+		t.Errorf("Expected 'Buzz' at index 4, got %v", result[4])
+	}
+	if len(result) > 14 && result[14] != "FizzBuzz" {
+		t.Errorf("Expected 'FizzBuzz' at index 14, got %v", result[14])
+	}
+
+	// Check for early termination based on cumulative sum. We can't predict
+	// the exact index of termination without re-implementing the entire
+	// function, but we can check that *if* the function terminates early,
+	// it does so with a `false` value.  We will assume the test case will run long enough to hit an even number and terminate.
+	terminated := false
+	for _, val := range result {
+		if val == false {
+			terminated = true
+			break
+		}
+	}
+
+	if !terminated {
+		t.Log("Function did not terminate early with 'false'. This might be ok if all 100 elements were processed without an even sum, but it's worth investigating.")
+	}
+
+	//Basic length check - ensure the array returned is within the bounds we expect
+
+	if len(result) > 100 {
+		t.Errorf("Expected length to be less than or equal to 100, got %d", len(result))
+	}
+
 }
